@@ -1,0 +1,25 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="style.css" />
+		<script type="text/javascript" src="main.js"></script>
+	</head>
+	
+	<body>
+		<header>
+			<h1>Funkyshark Downloader</h1>
+		</header>
+		
+		<section>
+			
+			<h1>Search for a song and download it!</h1>
+			
+			<div>
+				<input value="Song title..." onfocus="if (this.value == 'Song title...') this.value = ''" onblur="if (this.value == '') this.value = 'Song title...'" type="text" id="title" onkeyup="checkKey(event)" />
+				<input value="Artist..." onfocus="if (this.value == 'Artist...') this.value = ''" onblur="if (this.value == '') this.value = 'Artist...'" type="text" id="artist" onkeyup="checkKey(event)" />
+			</div>
+			
+			<div id="icon">
+			</div>
+		</section>
+	</body>
+</html>

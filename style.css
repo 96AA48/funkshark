@@ -1,0 +1,79 @@
+html {
+    border-bottom: solid 40px #FFF;
+    -webkit-user-select:none;
+}
+
+body {
+	background-color:#f86f05;
+	color:#FFF;
+	font-family:sans-serif;
+	-webkit-app-region: drag;
+	margin:0;
+	padding:0;
+}
+
+header {
+    -webkit-transition:0.3s;
+    height:55px;
+    transition:0.3s;
+    background-color:#2c2c2c;
+    background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#333333), to(#222222));
+    background-image:-webkit-linear-gradient(top, #333333, #222222);
+    background-repeat:repeat-x;
+    line-height:53px;
+    padding:0px 20px 0px 20px;
+}
+
+section {
+    width: 500px;
+    margin: 20px auto 0px auto;
+}
+
+section h1 {
+	text-align:center;
+}
+
+section div {
+	width:100%;
+}
+
+section div#icon {
+	background-image:url('icon.png');
+	height: 180px;
+	width: 180px;
+	background-repeat: no-repeat;
+	position:fixed;
+	bottom:0;
+	left: -50px;
+	background-size: 180px;
+	-webkit-transform: rotate(54deg);
+}
+
+section div input[type="text"] {
+    background-color:#333;   
+    padding:10px;
+    border:solid 4px #FFF;
+    border-radius:3px;
+    box-shadow:0px 1px 7px 0px #000;
+    color:#FFF;
+    font-family:sans-serif;
+    font-weight:bolder;
+    font-size:x-large;
+    height: 60px;
+}
+
+section div input#title {
+	width:60%;
+	float:left;
+}
+
+section div input#artist {
+	width:39%;
+	margin-left: 5px;
+}
+
+section div input[type="button"] {
+    height: 60px;
+    position:relative;
+    top: -3px;
+}
