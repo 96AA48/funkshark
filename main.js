@@ -67,10 +67,13 @@ function getDownloadLocation() {
 	if (os.platform() == 'linux') {
 		var loc = '/home/' + process.env['USER'] + '/Downloads/Funkyshark/';
 	}
+	else if (os.platform() == 'win32') {
+		var loc = 'C:\\Users\\' + process.env['USERNAME'] + '\\Downloads\\Funkshark\\';
+	}
 	/* Adding more platforms later */
 	
 	if (!(fs.existsSync(loc))) {
-		fs.mkdir(loc);
+		fs.mkdirSync(loc);
 	}
 	
 	return loc;
