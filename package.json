@@ -5,7 +5,7 @@
 	"window" : {
 		"title" : "Funkyshark Downloader",
 		"frame" : true,
-		"toolbar" : false,
+		"toolbar" : true,
 		"position" : "mouse",
 		"icon" : "icon_128.png",
 		"max_height" : 350,

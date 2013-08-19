@@ -5,6 +5,7 @@ var os = require('os');
 var GS = require('grooveshark-streaming');
 
 var parts = 0;
+var page;
 
 console.log('Funkyshark Downloader started!')
 
@@ -14,44 +15,36 @@ function checkKey(e) {
 	}
 }
 
-function extractInfo() {
+function extractInfo(id) {
 	var title = document.getElementById('title').value;
-	var artist = document.getElementById('artist').value;
 	
 	if (title == 'Song title...') {
 		title = '';
 	}
-	else if (artist == 'Artist...') {
-		artist = ''
-	}
 	
-	console.log(title + " - " + artist);
+	console.log(title);
 	
-	GS.Tinysong.getSongInfo(title, artist, function(err, songInfo) {
-		console.log('Got songInfo');
-		console.log(songInfo);
-		GS.Grooveshark.getStreamingUrl(songInfo.SongID, function(err, streamUrl) {
-			console.log('Got streamUrl');
-	    	downloadFile(streamUrl, songInfo);
-		});
-	});	
-}	
+	getHtml(title);
+}
 
-function downloadFile(e, i) {
+function downloadFile(e, p) {
+	var properties = p.split('|-|');
+	console.log(properties);
+	console.log(e);
 	http.get(e, function (res) {
 		console.log('Got response : ' + res.statusCode + ". Downloading...");
 		
 		res.on('data', function (data) {
-			if (fs.existsSync(getDownloadLocation() + i.SongName + ' - ' + i.ArtistName + '.mp3')) {
-				fs.appendFile(getDownloadLocation() + i.SongName + ' - ' + i.ArtistName + '.mp3', data, function () {
+			if (fs.existsSync(getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3')) {
+				fs.appendFile(getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3', data, function () {
 					parts++
 				});
 			}
 			else {
-				console.log('Saving to file name ' + i.SongName + ' - ' + i.ArtistName + '.mp3');
-				fs.writeFile(getDownloadLocation() + i.SongName + ' - ' + i.ArtistName + '.mp3', data, function () {
+				console.log('Saving to file name ' + properties[1] + ' - ' + properties[2] + '.mp3');
+				fs.writeFile(getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3', data, function () {
 					console.log("Began downloading file.");
-					console.log('File location : ' + getDownloadLocation() + i.SongName + ' - ' + i.ArtistName + '.mp3');
+					console.log('File location : ' + getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3');
 				});	
 			}
 		});
@@ -65,7 +58,7 @@ function downloadFile(e, i) {
 
 function getDownloadLocation() {
 	if (os.platform() == 'linux') {
-		var loc = '/home/' + process.env['USER'] + '/Downloads/Funkyshark/';
+		var loc = '/home/' + process.env['USER'] + '/Downloads/Funkshark/';
 	}
 	else if (os.platform() == 'win32') {
 		var loc = 'C:\\Users\\' + process.env['USERNAME'] + '\\Downloads\\Funkshark\\';
@@ -79,37 +72,46 @@ function getDownloadLocation() {
 	return loc;
 }
 
-/* New code for future use.
-function getHtml(search) {
-	http.get('http://tinysong.com/#/result/' + search, function (res) {
-		console.log('Got response : ' + res.statusCode);
-		
-		res.on('data', function (data) {
-			extract(data);
-		});
-	}).on('error', function (err) {
-		console.log('Got error : ' + err.message);
-	});	
+function makeList(list) {
+	var listitems = document.getElementById('list').getElementsByTagName('li');
+	var stringList = list;
+	list = JSON.parse(list);
+	document.getElementById('list').innerHTML = '';
+	for (i = 0; i < list.length; i++) {
+		document.getElementById('list').innerHTML = document.getElementById('list').innerHTML + '<li>' + list[i].ArtistName + ' - ' + list[i].SongName + '</li>';
+		listitems[i].className = list[i].SongID + '|-|' + list[i].SongName + '|-|' + list[i].ArtistName;
+		console.log(listitems[i]);
+	}
+	for (i = 0; i < listitems.length; i++) {
+		listitems[i].onclick = function (e) {
+			var properties = e.toElement.className.split('|-|');
+			GS.Grooveshark.getStreamingUrl(properties[0], function(err, streamUrl) {
+				console.log('Got streamUrl');
+		    	downloadFile(streamUrl, e.toElement.className);
+			});
+		}
+	}
 }
 
-function extract(e) {
-	console.log("Gonna extract the html now.");
-	$ = cheerio.load(e);
+function getHtml(search) {
+	var request = http.get('http://tinysong.com/s/' + search + '?format=json&limit=3&key=0131065fac026c65c87e3658dfa66b88', function (res) {
+		console.log('Got response : ' + res.statusCode);
+		page = '';
+		res.on('data', function (data) {
+			page = page + data;
+			//extract(data);
+		});
+		res.on('end', function (data) {
+			makeList(page);
+		})
+	})
 	
-	console.log($('html').html());
+	request.on('error', function (err) {
+		console.log('Got error : ' + err.message);
+	});
 	
-	for (i = 0; i < $('ul.result').length; i++) {
-		var songId = $($('ul.result div.play')[i]).attr('rel');
-		var songName = $($('ul.result div.track ul li.song')[i]).html();
-		var songArtist = $($('ul.result div.track ul li.artist	')[i]).html();
-		
-		var song = {
-			'id' : songId,
-			'name' : songName,
-			'artist' : songArtist
-		} 
-		
-		result.concat(song);
-		console.log(result);
-	}
-}*/
+	request.on('done', function (data) {
+		console.log(data);
+		console.log(page);
+	});
+}

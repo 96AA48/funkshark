@@ -1,10 +1,10 @@
 html {
-    border-bottom: solid 40px #FFF;
+    /*border-bottom: solid 40px #FFF;*/
     -webkit-user-select:none;
 }
 
 body {
-	background-color:#f86f05;
+	background-color: #f86f05;
 	color:#FFF;
 	font-family:sans-serif;
 	-webkit-app-region: drag;
@@ -31,6 +31,7 @@ section {
 
 section h1 {
 	text-align:center;
+	margin-bottom: 13px;
 }
 
 section div {
@@ -43,10 +44,10 @@ section div#icon {
 	width: 180px;
 	background-repeat: no-repeat;
 	position:fixed;
-	bottom:0;
+	bottom: -55px;
 	left: -50px;
 	background-size: 180px;
-	-webkit-transform: rotate(54deg);
+	-webkit-transform: rotate(28deg);
 }
 
 section div input[type="text"] {
@@ -63,7 +64,7 @@ section div input[type="text"] {
 }
 
 section div input#title {
-	width:60%;
+	width: 100%;
 	float:left;
 }
 
@@ -76,4 +77,36 @@ section div input[type="button"] {
     height: 60px;
     position:relative;
     top: -3px;
+}
+
+section ul#list {
+    list-style:none;
+    padding-left: 0px;
+    background-color: #FFF;
+    color: #000;
+    width: 400px;
+    margin: 74px auto 0 auto;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border: solid 2px #C64C03;
+    border-top: none;
+}
+
+section ul#list li:hover {
+    background-color:#DDD;
+}
+
+section ul#list li {
+    border-bottom:ridge 1px #333;
+    padding: 7px 15px 7px 15px;
+}
+
+section ul#list li:last-child {
+    border-bottom:none;
+    padding-bottom:7px !important;
+}
+
+section ul#list li:last-child:hover {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
