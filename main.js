@@ -3,9 +3,11 @@ var fs = require('fs');
 var os = require('os');
 
 var GS = require('grooveshark-streaming');
+var request = require('request');
 
 var parts = 0;
 var page;
+var isDownloading = false;
 
 console.log('Funkyshark Downloader started!')
 
@@ -28,32 +30,49 @@ function extractInfo(id) {
 }
 
 function downloadFile(e, p) {
+	console.log(isDownloading);
 	var properties = p.split('|-|');
 	console.log(properties);
 	console.log(e);
-	http.get(e, function (res) {
-		console.log('Got response : ' + res.statusCode + ". Downloading...");
-		
-		res.on('data', function (data) {
+	
+	request(e, function (err, res, body) {
+		if (!err && res.statusCode == 200) {
 			if (fs.existsSync(getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3')) {
-				fs.appendFile(getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3', data, function () {
-					parts++
-				});
+				fs.unlinkSync(getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3');
 			}
-			else {
-				console.log('Saving to file name ' + properties[1] + ' - ' + properties[2] + '.mp3');
-				fs.writeFile(getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3', data, function () {
-					console.log("Began downloading file.");
-					console.log('File location : ' + getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3');
-				});	
-			}
-		});
-		res.on('end', function (data) {
-			console.log(parts + ' parts');
-		});
-	}).on('error', function (err) {
-		console.log('Got error : ' + err.message);
+			fs.writeFile(getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3', body, function (){
+				console.log(body);
+				console.log('Wrote file.')
+			});
+		}
 	});
+	/*
+	if (isDownloading == false) {
+		isDownloading = true;
+		http.get(e, function (res) {
+			console.log('Got response : ' + res.statusCode + ". Downloading...");
+			
+			res.on('data', function (data) {
+				if (fs.existsSync(getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3')) {
+					fs.appendFile(getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3', data, function () {
+						parts++
+					});
+				}
+				else {
+					console.log('Saving to file name ' + properties[1] + ' - ' + properties[2] + '.mp3');
+					fs.writeFile(getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3', data, function () {
+						console.log("Began downloading file.");
+						console.log('File location : ' + getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3');
+					});	
+				}
+			});
+			res.on('end', function (data) {
+				console.log(parts + ' parts');
+			});
+		}).on('error', function (err) {
+			console.log('Got error : ' + err.message);
+		});	
+	}*/
 }
 
 function getDownloadLocation() {
@@ -83,7 +102,7 @@ function makeList(list) {
 		console.log(listitems[i]);
 	}
 	for (i = 0; i < listitems.length; i++) {
-		listitems[i].onclick = function (e) {
+		listitems[i].onmouseup = function (e) {
 			var properties = e.toElement.className.split('|-|');
 			GS.Grooveshark.getStreamingUrl(properties[0], function(err, streamUrl) {
 				console.log('Got streamUrl');
