@@ -90,6 +90,9 @@ section ul#list {
     border-bottom-right-radius: 15px;
     border: solid 2px #C64C03;
     border-top: none;
+    max-height:140px;
+    overflow-x:hidden;
+    overflow-y:auto;
 }
 
 section ul#list li:hover {

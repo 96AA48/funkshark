@@ -9,11 +9,19 @@ var parts = 0;
 var page;
 var isDownloading = false;
 
-console.log('Funkyshark Downloader started!')
+console.log('Funkyshark Downloader started!');
 
 function checkKey(e) {
 	if (e.keyCode == 13) {
 		extractInfo();
+	}
+	
+	if (e.ctrlKey == true) {
+        console.log("Got a control key.");
+		if (e.keyCode == 4) {
+            console.log("Got CTRL + D");
+			require('nw.gui').Window.get().showDevTools();
+		}
 	}
 }
 
@@ -35,35 +43,33 @@ function downloadFile(e, p) {
 	console.log(properties);
 	console.log(e);
 	
-	request(e, function (err, res, body) {
+	/*request(e, function (err, res, body) {
 		if (!err && res.statusCode == 200) {
 			if (fs.existsSync(getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3')) {
 				fs.unlinkSync(getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3');
 			}
 			fs.writeFile(getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3', body, function (){
 				console.log(body);
-				console.log('Wrote file.')
+				console.log('Wrote file.');
 			});
 		}
-	});
-	/*
+	});*/
+	
 	if (isDownloading == false) {
-		isDownloading = true;
+		isDownloading = false;
 		http.get(e, function (res) {
 			console.log('Got response : ' + res.statusCode + ". Downloading...");
 			
 			res.on('data', function (data) {
 				if (fs.existsSync(getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3')) {
-					fs.appendFile(getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3', data, function () {
-						parts++
-					});
+					fs.appendFileSync(getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3', data);
+					parts++;
 				}
 				else {
 					console.log('Saving to file name ' + properties[1] + ' - ' + properties[2] + '.mp3');
-					fs.writeFile(getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3', data, function () {
-						console.log("Began downloading file.");
-						console.log('File location : ' + getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3');
-					});	
+					fs.writeFile(getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3', data);
+					console.log("Began downloading file.");
+					console.log('File location : ' + getDownloadLocation() + properties[1] + ' - ' + properties[2] + '.mp3');	
 				}
 			});
 			res.on('end', function (data) {
@@ -72,7 +78,7 @@ function downloadFile(e, p) {
 		}).on('error', function (err) {
 			console.log('Got error : ' + err.message);
 		});	
-	}*/
+	}
 }
 
 function getDownloadLocation() {
@@ -108,7 +114,7 @@ function makeList(list) {
 				console.log('Got streamUrl');
 		    	downloadFile(streamUrl, e.toElement.className);
 			});
-		}
+		};
 	}
 }
 
@@ -122,8 +128,8 @@ function getHtml(search) {
 		});
 		res.on('end', function (data) {
 			makeList(page);
-		})
-	})
+		});
+	});
 	
 	request.on('error', function (err) {
 		console.log('Got error : ' + err.message);
@@ -133,4 +139,8 @@ function getHtml(search) {
 		console.log(data);
 		console.log(page);
 	});
+}
+
+function init() {
+	document.addEventListener('keypress', checkKey);
 }
