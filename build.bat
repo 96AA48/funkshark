@@ -1,6 +1,6 @@
-7z a -mcl -tzip app.nw -r */*.*
-7z a -mcl -tzip app.nw -r */*
-7z a -mcl -tzip app.nw -r */*/*.*
-7z a -mcl -tzip app.nw -r *
+rm app.nw
+zip u app.nw * -r -tzip
+zip u app.nw */* -r -tzip
+clear
 
-C:/Development/webdevelopment/nodejs/node-webkit/nw.exe app.nw
+E:/Development/Libraries/node-webkit/nw.exe --enable-logging app.nw
