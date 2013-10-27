@@ -32,6 +32,7 @@ section {
 section h1 {
 	text-align:center;
 	margin-bottom: 13px;
+	text-shadow: 0px -1px 0px  #C64C03;
 }
 
 section div {
@@ -39,7 +40,7 @@ section div {
 }
 
 section div#icon {
-	background-image:url('icon.png');
+	background-image: url('img/icon.png');
 	height: 180px;
 	width: 180px;
 	background-repeat: no-repeat;
