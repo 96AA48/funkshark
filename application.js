@@ -71,7 +71,7 @@ var funkshark = {
 				});
 			
 				res.on('end', function (data) {
-					/* End of file download */
+					funkshark.file.done(p);
 				});
 				res.on('error', function (err) {
 					console.log('Got error : ' + err.message);
@@ -93,6 +93,9 @@ var funkshark = {
 			}
 			
 			return loc;
+		},
+		done : function (p) {
+			funkshark.feedback('Done downloading "' + p[1] + ' - ' + p[2] + '"');
 		}
 	},
 	input : function (e) {
@@ -107,6 +110,14 @@ var funkshark = {
 				require('nw.gui').Window.get().showDevTools();
 			}
 		}
+	},
+	feedback : function (str) {
+		$('div#feedback').html(str);
+		$('div#feedback').animate({right:0}, 'fast', function () {
+			setTimeout(function () {
+				$('div#feedback').animate({right:-1000}, 'slow', function () {$('div#feedback').html('');});
+			},2000);
+		});
 	},
 	init  : function () {
 		document.addEventListener('keypress', funkshark.input);

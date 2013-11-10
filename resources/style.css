@@ -1,6 +1,7 @@
 html {
     /*border-bottom: solid 40px #FFF;*/
     -webkit-user-select:none;
+    overflow:hidden;
 }
 
 body {
@@ -10,6 +11,7 @@ body {
 	-webkit-app-region: drag;
 	margin:0;
 	padding:0;
+	overflow:hidden;
 }
 
 header {
@@ -22,6 +24,23 @@ header {
     background-repeat:repeat-x;
     line-height:53px;
     padding:0px 20px 0px 20px;
+}
+
+div#feedback {
+    position:absolute;
+    background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#333333), to(#222222));
+    background-image:-webkit-linear-gradient(top, #333333, #222222);
+    height:37px;
+    width:auto;
+    right:-300;
+    padding-right:20px;
+    text-align:center;
+    padding-top:18px;
+    border-left:solid 1px #000;
+    color:#FFF;
+    overflow: hidden;
+    white-space: nowrap;
+    padding-left: 20px;
 }
 
 section {
