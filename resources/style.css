@@ -1,5 +1,6 @@
 html {
     /*border-bottom: solid 40px #FFF;*/
+   	-webkit-text-stroke: 1px rgba(0, 0, 0, .2);
     -webkit-user-select:none;
     overflow:hidden;
 }
@@ -122,6 +123,15 @@ section ul#list li:hover {
 section ul#list li {
     border-bottom:ridge 1px #333;
     padding: 7px 15px 7px 15px;
+}
+
+section ul#list li.downloading {
+	background-color: #AAA;
+	color: #555;
+}
+
+section ul#list li.downloaded {
+	background-color:#8FE862;
 }
 
 section ul#list li:last-child {

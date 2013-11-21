@@ -5,11 +5,11 @@ var os = require('os');
 
 //Node third-party libraries.
 var GS = require('grooveshark-streaming');
-var request = require('request');
 
 //Other variables.
 var parts = 0;
 var page;
+var queue = 0;
 var isDownloading = false;
 
 //Log that Funkshark started.
@@ -37,7 +37,7 @@ var funkshark = {
 				});
 			
 				request.on('error', function (err) {
-					console.log('Got error while looking up song : ' + err.message);
+					funkshark.feedback('Got error while looking up song : ' + err.message);
 				});
 		},
 		list : function (lst) {
@@ -50,10 +50,13 @@ var funkshark = {
 				}
 				for (i = 0; i < listitems.length; i++) {
 					listitems[i].onmouseup = function (e) {
+						queue += 1;
 						var properties = e.toElement.className.split('|-|');
+						properties[3] = e.toElement.className += ' downloading queue_' + queue;
 						GS.Grooveshark.getStreamingUrl(properties[0], function(err, streamUrl) {
 					    	funkshark.file.download(streamUrl, properties);
 						});
+						this.onmouseup = null;
 					};
 				}
 		},
@@ -95,6 +98,9 @@ var funkshark = {
 			return loc;
 		},
 		done : function (p) {
+			var attr = p[3].split(' ')[p[3].split(' ').length - 1];
+			$('.' + attr).removeClass('downloading');
+			$('.' + attr).addClass('downloaded');
 			funkshark.feedback('Done downloading "' + p[1] + ' - ' + p[2] + '"');
 		}
 	},
@@ -104,9 +110,9 @@ var funkshark = {
 		}
 		
 		if (e.ctrlKey == true) {
-	        console.log("Got a control key.");
+	        console.log('Got a control key.');
 			if (e.keyCode == 4) {
-	            console.log("Got CTRL + D");
+	            console.log('Got CTRL + D');
 				require('nw.gui').Window.get().showDevTools();
 			}
 		}
@@ -115,7 +121,10 @@ var funkshark = {
 		$('div#feedback').html(str);
 		$('div#feedback').animate({right:0}, 'fast', function () {
 			setTimeout(function () {
-				$('div#feedback').animate({right:-1000}, 'slow', function () {$('div#feedback').html('');});
+				$('div#feedback').animate({right:-1000}, 'slow', function () {
+					$('div#feedback').html('');
+					$('div#feedback').css({right:-40});
+				});
 			},2000);
 		});
 	},
