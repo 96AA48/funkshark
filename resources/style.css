@@ -1,18 +1,18 @@
 html {
     /*border-bottom: solid 40px #FFF;*/
-   	-webkit-text-stroke: 1px rgba(0, 0, 0, .2);
+    -webkit-text-stroke: 1px rgba(0, 0, 0, .2);
     -webkit-user-select:none;
     overflow:hidden;
 }
 
 body {
-	background-color: #f86f05;
-	color:#FFF;
-	font-family:sans-serif;
-	-webkit-app-region: drag;
-	margin:0;
-	padding:0;
-	overflow:hidden;
+    background-color: #f86f05;
+    color:#FFF;
+    font-family:sans-serif;
+    -webkit-app-region: drag;
+    margin:0;
+    padding:0;
+    overflow:hidden;
 }
 
 header {
@@ -50,25 +50,31 @@ section {
 }
 
 section h1 {
-	text-align:center;
-	margin-bottom: 13px;
-	text-shadow: 0px -1px 0px  #C64C03;
+    text-align:center;
+    margin-bottom: 13px;
+    text-shadow: 0px -1px 0px  #C64C03;
 }
 
 section div {
-	width:100%;
+    width:100%;
+}
+
+section div#more {
+    margin-left:50%;
+    position:relative;
+    left:-25px;
 }
 
 section div#icon {
-	background-image: url('img/icon.png');
-	height: 180px;
-	width: 180px;
-	background-repeat: no-repeat;
-	position:fixed;
-	bottom: -55px;
-	left: -50px;
-	background-size: 180px;
-	-webkit-transform: rotate(28deg);
+    background-image: url('img/icon.png');
+    height: 180px;
+    width: 180px;
+    background-repeat: no-repeat;
+    position:fixed;
+    bottom: -55px;
+    left: -50px;
+    background-size: 180px;
+    -webkit-transform: rotate(28deg);
 }
 
 section div input[type="text"] {
@@ -85,13 +91,13 @@ section div input[type="text"] {
 }
 
 section div input#title {
-	width: 100%;
-	float:left;
+    width: 100%;
+    float:left;
 }
 
 section div input#artist {
-	width:39%;
-	margin-left: 5px;
+    width:39%;
+    margin-left: 5px;
 }
 
 section div input[type="button"] {
@@ -126,12 +132,12 @@ section ul#list li {
 }
 
 section ul#list li.downloading {
-	background-color: #AAA;
-	color: #555;
+    background-color: #AAA;
+    color: #555;
 }
 
 section ul#list li.downloaded {
-	background-color:#8FE862;
+    background-color:#8FE862;
 }
 
 section ul#list li:last-child {
@@ -142,4 +148,22 @@ section ul#list li:last-child {
 section ul#list li:last-child:hover {
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
+}
+
+span#settings {
+    position:fixed;
+    right:0px;
+    bottom:0px;
+    background-color: #C64C03;
+    padding:10px;
+    padding-bottom:7px;
+    border-top-left-radius:10px;
+}
+
+span#settings:hover {
+    background-color: #f97f16;
+}
+
+section#settings {
+    display:none;
 }

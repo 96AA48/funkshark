@@ -134,5 +134,21 @@ var funkshark = {
 		$('section div#more').click(function (e) {
 			console.log();
 		});
+
+		$('span#settings').click(function (e) {
+			if ($('span#settings').html() == 'Settings') {
+				$('section#main').fadeOut('fast', function () {
+					$('section#settings').fadeIn('fast');
+					$('span#settings').html('Back');
+				});	
+			}
+			else {
+				$('section#settings').fadeOut('fast', function () {
+					$('section#main').fadeIn('fast');
+					$('span#settings').html('Settings');
+				});
+			}
+			
+		});
 	}
 };
