@@ -22,11 +22,12 @@ var funkshark = {
 		if (val == 'Song title...') {
 			val = '';
 		}
-		funkshark.file.search(val);		
+		funkshark.file.search(val);
 	},
 	file : {
-		search : function (srch) {
-				var request = http.get('http://tinysong.com/s/' + srch + '?format=json&limit=3&key=0131065fac026c65c87e3658dfa66b88', function (res) {
+		search : function (srch, nresults) {
+				if (!nresults) nresults = 3;
+				var request = http.get('http://tinysong.com/s/' + srch + '?format=json&limit=' + nresults + '&key=0131065fac026c65c87e3658dfa66b88', function (res) {
 					page = '';
 					res.on('data', function (data) {
 						page = page + data;
@@ -69,7 +70,7 @@ var funkshark = {
 						parts++;
 					}
 					else {
-						fs.writeFile(funkshark.file.location() + p[1] + ' - ' + p[2] + '.mp3', data);	
+						fs.writeFileSync(funkshark.file.location() + p[1] + ' - ' + p[2] + '.mp3', data);	
 					}
 				});
 			
@@ -130,5 +131,8 @@ var funkshark = {
 	},
 	init  : function () {
 		document.addEventListener('keypress', funkshark.input);
+		$('section div#more').click(function (e) {
+			console.log();
+		});
 	}
 };
