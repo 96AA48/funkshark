@@ -11,7 +11,7 @@ var parts = 0;
 var page;
 var queue = 0;
 var isDownloading = false;
-
+var settings = {};
 //Log that Funkshark started.
 console.log('Funkshark Downloader started!');
 
@@ -65,12 +65,12 @@ var funkshark = {
 			http.get(e, function (res) {
 						
 				res.on('data', function (data) {
-					if (fs.existsSync(funkshark.file.location() + p[1] + ' - ' + p[2] + '.mp3')) {
-						fs.appendFileSync(funkshark.file.location() + p[1] + ' - ' + p[2] + '.mp3', data);
+					if (fs.existsSync(settings.download + p[1] + ' - ' + p[2] + '.mp3')) {
+						fs.appendFileSync(settings.download + p[1] + ' - ' + p[2] + '.mp3', data);
 						parts++;
 					}
 					else {
-						fs.writeFileSync(funkshark.file.location() + p[1] + ' - ' + p[2] + '.mp3', data);	
+						fs.writeFileSync(settings.download + p[1] + ' - ' + p[2] + '.mp3', data);	
 					}
 				});
 			
@@ -129,10 +129,31 @@ var funkshark = {
 			},2000);
 		});
 	},
+	settings : {
+		load : function () {
+			if (!localStorage.settings) {
+				settings = {
+					download : funkshark.file.location()
+				};
+			}
+			else {
+				
+				settings = JSON.parse(localStorage.settings);
+				if (typeof settings != 'object') {
+					settings = JSON.parse(settings);	
+				}
+				console.log(settings.download);
+			}
+		},
+		save : function () {
+			localStorage.setItem('settings', JSON.stringify(settings));
+		}
+	},
 	init  : function () {
+		funkshark.settings.load();
 		document.addEventListener('keypress', funkshark.input);
 		$('section div#more').click(function (e) {
-			console.log();
+			console.log("Clicked on more!");
 		});
 
 		$('span#settings').click(function (e) {
@@ -150,5 +171,18 @@ var funkshark = {
 			}
 			
 		});
+	
+		$('button#downloadlocation').click(function () {
+			$('input#downloadlocation').click();
+		});
+		
+		$('input#downloadlocation').change(function () {
+			console.log("Changed download location");
+			settings.download = $('input#downloadlocation').val() + '\\';
+			
+			funkshark.settings.save();
+			funkshark.settings.load();
+		});	
+
 	}
 };
