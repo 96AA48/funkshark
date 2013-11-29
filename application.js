@@ -178,8 +178,15 @@ var funkshark = {
 		
 		$('input#downloadlocation').change(function () {
 			console.log("Changed download location");
-			settings.download = $('input#downloadlocation').val() + '\\';
-			
+			settings.download = $('input#downloadlocation').val();
+
+			if (os.platform() == 'win32') {
+				settings.download += '\\';
+			}
+			else if (os.platform() == 'linux') {
+				settings.download += '/'
+			}
+
 			funkshark.settings.save();
 			funkshark.settings.load();
 		});	
