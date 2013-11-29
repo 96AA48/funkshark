@@ -12,6 +12,8 @@ var page;
 var queue = 0;
 var isDownloading = false;
 var settings = {};
+var lastSearch;
+
 //Log that Funkshark started.
 console.log('Funkshark Downloader started!');
 
@@ -27,6 +29,7 @@ var funkshark = {
 	file : {
 		search : function (srch, nresults) {
 				if (!nresults) nresults = 3;
+				lastSearch = srch;
 				var request = http.get('http://tinysong.com/s/' + srch + '?format=json&limit=' + nresults + '&key=0131065fac026c65c87e3658dfa66b88', function (res) {
 					page = '';
 					res.on('data', function (data) {
@@ -60,6 +63,7 @@ var funkshark = {
 						this.onmouseup = null;
 					};
 				}
+				$('div#more').toggle();
 		},
 		download : function (e, p) {
 			http.get(e, function (res) {
@@ -153,7 +157,12 @@ var funkshark = {
 		funkshark.settings.load();
 		document.addEventListener('keypress', funkshark.input);
 		$('section div#more').click(function (e) {
-			console.log("Clicked on more!");
+			if (lastSearch != null || lastSearch != undefined) {
+				funkshark.file.search(lastSearch, 120);
+			}
+			else {
+				console.log("There wasn't a last search found.");
+			}
 		});
 
 		$('span#settings').click(function (e) {

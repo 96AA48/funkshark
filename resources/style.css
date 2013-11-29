@@ -65,7 +65,7 @@ section div#more {
     left:-25px;
 }
 
-section div#icon {
+div#icon {
     background-image: url('img/icon.png');
     height: 180px;
     width: 180px;
@@ -186,6 +186,10 @@ section ul#list li:last-child:hover {
     border-bottom-right-radius: 15px;
 }
 
+div#more {
+	display:none;
+}
+
 span#settings {
     position:fixed;
     right:0px;
@@ -202,4 +206,11 @@ span#settings:hover {
 
 section#settings {
     display:none;
+}
+
+div#donate {
+    position:absolute;
+    bottom: 8px;
+    left:50%;
+    margin-left: -30px;
 }

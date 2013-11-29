@@ -10,7 +10,7 @@
 		<div id="feedback">
 			
 		</div>
-		
+	
 		<header>
 			<h1>Funkshark Downloader</h1>
 		</header>
@@ -29,21 +29,36 @@
 			</ul>
 			<div id="more">more</div>
 			
-			<div id="icon">
-			</div>
-			
 		</section>
 
 		<section id="settings">
-			<h1>Here is where you can edit some settings.</h1>
+			<h1>You found the not-so-secret-settings page!</h1>
 			<input id="downloadlocation" type="file" nwdirectory />
 			<button id="downloadlocation">Change Download Folder</button>
-			<div id="icon">
-			</div>
 		</section>
 		<span id="settings">Settings</span>
 		<script type="text/javascript">
 			funkshark.init();
 		</script>
+
+		<div id="icon"> </div>
+			
+		<div id="donate">
+			<script src="http://coinwidget.com/widget/coin.js"></script>
+			<script>
+			CoinWidgetCom.go({
+				wallet_address: "17Z7gcmfs56cKy7aj215kSaDuBff97Urt6"
+				, currency: "bitcoin"
+				, counter: "count"
+				, alignment: "ac"
+				, qrcode: true
+				, auto_show: false
+				, lbl_button: "Donate"
+				, lbl_address: "My Bitcoin Address:"
+				, lbl_count: "Donations"
+				, lbl_amount: "BTC"
+			});
+			</script>
+		</div>
 	</body>
 </html>
