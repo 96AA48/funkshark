@@ -24,6 +24,7 @@ var funkshark = {
 		if (val == 'Song title...') {
 			val = '';
 		}
+		
 		funkshark.file.search(val);
 	},
 	file : {
@@ -42,6 +43,7 @@ var funkshark = {
 			
 				request.on('error', function (err) {
 					funkshark.feedback('Got error while looking up song : ' + err.message);
+					$('div#more').css('display','none');
 				});
 		},
 		list : function (lst) {
@@ -63,7 +65,7 @@ var funkshark = {
 						this.onmouseup = null;
 					};
 				}
-				$('div#more').toggle();
+				$('div#more').css('display','block');
 		},
 		download : function (e, p) {
 			http.get(e, function (res) {
@@ -193,7 +195,7 @@ var funkshark = {
 				settings.download += '\\';
 			}
 			else if (os.platform() == 'linux') {
-				settings.download += '/'
+				settings.download += '/';
 			}
 
 			funkshark.settings.save();
