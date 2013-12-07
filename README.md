@@ -23,8 +23,6 @@ If you want to contact me you can do so via **96aa48 [at] gmail.com**.
 ![alt text](http://i.imgur.com/SOS33Pa.png "Have them downloaded within 30s (depending on your internet connection).")
 ###### Change the download folder to your prefered location.
 ![alt text](http://i.imgur.com/nSHneW3.png "Change the download folder to your prefered location.")
-###### If you feel like I did a good job, consider donating.
-![alt text](http://i.imgur.com/F9SeBsx.png "If you feel like I did a good job, consider donating.")
 
 ## Donate
 
