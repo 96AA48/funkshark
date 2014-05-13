@@ -96,6 +96,9 @@ var funkshark = {
 			else if (os.platform() == 'win32') {
 				var loc = 'C:\\Users\\' + process.env['USERNAME'] + '\\Downloads\\Funkshark\\';
 			}
+			else if (os.platform() == 'darwin') {
+				var loc = "/Users/" + process.env['USER'] + "/Downloads/Funkshark/";
+			}
 			/* Adding more platforms later */
 			
 			if (!(fs.existsSync(loc))) {
@@ -194,7 +197,7 @@ var funkshark = {
 			if (os.platform() == 'win32') {
 				settings.download += '\\';
 			}
-			else if (os.platform() == 'linux') {
+			else if ((os.platform() == 'linux') || (os.platform() == 'darwin')) {
 				settings.download += '/';
 			}
 
