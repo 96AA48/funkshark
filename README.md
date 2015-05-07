@@ -1,3 +1,5 @@
+#Project is deprecated since closure of Grooveshark.
+
 ## Introduction
 
 Funkshark is a small application made for people who like to download music.
@@ -23,11 +25,6 @@ If you want to contact me you can do so via **96aa48 [at] gmail.com**.
 ![alt text](http://i.imgur.com/SOS33Pa.png "Have them downloaded within 30s (depending on your internet connection).")
 ###### Change the download folder to your prefered location.
 ![alt text](http://i.imgur.com/nSHneW3.png "Change the download folder to your prefered location.")
-
-## Donate
-
-I accept bitcoins, if you feel like I did a good job please consider donating!
-Bitcoin Wallet adress : 17Z7gcmfs56cKy7aj215kSaDuBff97Urt6
 
 ## License
 
